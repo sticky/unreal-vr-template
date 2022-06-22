@@ -5,132 +5,6 @@
 	"Description": "",
 	"Plugins": [
 		{
-			"Name": "PythonScriptPlugin",
-			"Enabled": true
-		},
-		{
-			"Name": "HDRIBackdrop",
-			"Enabled": true
-		},
-		{
-			"Name": "SequencerScripting",
-			"Enabled": true
-		},
-		{
-			"Name": "Takes",
-			"Enabled": true
-		},
-		{
-			"Name": "VirtualProductionUtilities",
-			"Enabled": true
-		},
-		{
-			"Name": "VirtualCamera",
-			"Enabled": true
-		},
-		{
-			"Name": "LiveLink",
-			"Enabled": true
-		},
-		{
-			"Name": "Composure",
-			"Enabled": true
-		},
-		{
-			"Name": "MediaFrameworkUtilities",
-			"Enabled": true
-		},
-		{
-			"Name": "MediaIOFramework",
-			"Enabled": true
-		},
-		{
-			"Name": "RemoteControl",
-			"Enabled": true
-		},
-		{
-			"Name": "nDisplay",
-			"Enabled": true,
-			"SupportedTargetPlatforms": [
-				"Win64",
-				"Linux"
-			]
-		},
-		{
-			"Name": "AjaMedia",
-			"Enabled": true,
-			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/91088fb17fb04b6b9eda41aaf8fda21e",
-			"SupportedTargetPlatforms": [
-				"Win64"
-			]
-		},
-		{
-			"Name": "BlackmagicMedia",
-			"Enabled": true,
-			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/433d28bdfb764ec5b2e60c4f45d5cb5c",
-			"SupportedTargetPlatforms": [
-				"Win64",
-				"Linux"
-			]
-		},
-		{
-			"Name": "AppleProResMedia",
-			"Enabled": true,
-			"SupportedTargetPlatforms": [
-				"Win64"
-			]
-		},
-		{
-			"Name": "HAPMedia",
-			"Enabled": true,
-			"SupportedTargetPlatforms": [
-				"Win64"
-			]
-		},
-		{
-			"Name": "AppleARKit",
-			"Enabled": true,
-			"SupportedTargetPlatforms": [
-				"IOS",
-				"Win64",
-				"Mac"
-			]
-		},
-		{
-			"Name": "AppleARKitFaceSupport",
-			"Enabled": true,
-			"SupportedTargetPlatforms": [
-				"IOS",
-				"Win64",
-				"Mac"
-			]
-		},
-		{
-			"Name": "PixelStreaming",
-			"Enabled": true
-		},
-		{
-			"Name": "VariantManager",
-			"Enabled": true
-		},
-		{
-			"Name": "DMXProtocol",
-			"Enabled": true
-		},
-		{
-			"Name": "MovieRenderPipeline",
-			"Enabled": true
-		},
-		{
-			"Name": "Bridge",
-			"Enabled": true,
-			"SupportedTargetPlatforms": [
-				"Win64",
-				"Mac",
-				"Linux"
-			]
-		},
-		{
 			"Name": "OpenXR",
 			"Enabled": true,
 			"SupportedTargetPlatforms": [
@@ -141,17 +15,16 @@
 			]
 		},
 		{
-			"Name": "RestartEditor",
+			"Name": "Bridge",
 			"Enabled": true,
-			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/a00eb1e478ae4a8fb655aa22f9125b07"
-		},
-		{
-			"Name": "XRVisualization",
-			"Enabled": false
+			"SupportedTargetPlatforms": [
+				"Win64",
+				"Mac",
+				"Linux"
+			]
 		}
 	],
 	"TargetPlatforms": [
-		"Android",
-		"Mac"
+		"Android"
 	]
 }
