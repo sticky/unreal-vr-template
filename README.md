@@ -24,7 +24,7 @@ We used the `VRPawn` Blueprint from Unreal Engine's _Virtual Reality_ template a
 
 These are the system settings and packages that we know to successfully compile and launch this template. As a disclaimer, there may be some flexibility in the versions and packages you choose, but the ones listed below provided the most consistent results for us.
 
-See the [Installation and Configuration](#installation-and-configuration) section of this document for tips on preparing your environment and notes on potential issues you may experience in the process.
+See the [Setting Up Your Environment](#setting-up-your-environment) section of this document for tips on preparing your environment and notes on potential issues you may experience in the process.
 
 - Unreal Engine
   - Version: `5.0.2`
@@ -49,7 +49,7 @@ See the [Installation and Configuration](#installation-and-configuration) sectio
 - Oculus Developer Hub
   - Version: `2.5.0`
 
-## Installation and Configuration
+## Setting Up Your Environment
 
 ### Android Studio
 
@@ -231,6 +231,50 @@ $YOUR_PROJECT_DIRECTORY/Intermediate/Config/CoalescedSourceConfigs/**
 # note the name of the Editor path includes you project's name, like SuperBlankEditor
 ~/Library/Preferences/Unreal\ Engine/$YOUR_PROJECT_NAMEEditor/**
 ```
+
+## Packaging the Application
+
+After successfully [Setting Up Your Environment](#setting-up-your-environment), you are ready to package the application and run it on your device.
+
+The first step of this process is to ensure that your Oculus device is configured for development and attached to your computer. You should follow [Meta's guidelines](https://developer.oculus.com/) regarding these steps. We use the [Oculus Developer Hub `2.5.0`](https://developer.oculus.com/documentation/unity/ts-odh/)
+
+### Before Launching
+
+Be sure to build the light and levels, otherwise you may see some warnings in the headset. Select _Build > Build All Levels_ from the Unreal Engine toolbar.
+
+### From the Project Launcher Window
+
+After confirming your device is ready and connected to your computer, you should see it in the list from the "Platforms" dropdown in the Unreal Engine editor. For the first run, we recommend packaging from the _Tools > Project Launcher_ window.
+
+From the window, click the button for "Show Advanced." The find your Android Quest device in the list and configure the following dropdown settings:
+
+| Setting    | Value          |
+| ---------- | -------------- |
+| Variant    | `Android_ASTC` |
+| Config     | `Development`  |
+| Data build | `By the book`  |
+
+Once set, click the little screen/controller icon (Launch this profile) to begin the packaging process. If the project is successfully packaged, it will attempt to launch the app on your device. When you are finished, you can click "Cancel" or "Done" to quit the preview.
+
+#### Notes
+
+We have only had consistent results with the `Android_ASTC` variant.
+
+At the time of this writing, we have not tested a `Shipping` config and expect it to involve an additional amount of work related to Android/Oculus app accounts and key-signing.
+
+We start off with a `By the book` data build because even our slim template needs to cook some assets on the first run. If you are not changing any meshes, materials or lighting and are just testing the packaging process, you can probably switch to `Do not cook` to save yourself some time.
+
+### From the Quick Launch Dropdown
+
+If you've followed the steps in [From the Project Launcher Window](#from-the-project-launcher-window), you should be able to select you device from the _Platforms > Quick Launch_ dropdown and package/run the app with the same settings.
+
+### From the Content/Device/SDK Management Dropdown
+
+You can generate and save an APK file on your machine by selecting _Platforms > Content/Device/SDK Management > Android > Package Project_. Configure the settings as described in [From the Project Launcher Window](#from-the-project-launcher-window).
+
+> Note: you will likely get an annoying popup when using this option that suggests "SDK Not Setup." As best we can tell, this is a bug in Unreal Engine for Mac because if you followed our [Setting Up Your Environment](#setting-up-your-environment) steps, the SDK is definitely setup. Hit "Continue" and proceed on your merry way.
+
+You will prompted to specify a directory for the packaged files to be save on you machine. After the process is complete, you can manually drag and drop the APK file into any Oculus Developer Hub to install on a selected device.
 
 ## Troubleshooting
 
