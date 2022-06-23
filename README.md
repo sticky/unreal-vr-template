@@ -305,3 +305,23 @@ $ cd $YOUR_PROJECT_DIRECTORY/Intermediate/Android/arm64/gradle
 $ ./gradlew clean
 $ ./gradlew cleanBuildCache
 ```
+
+## Contributions
+
+This is an open source project and document! Despite there being a vast and active Unreal Engine community publishing tutorials and answering forum questions, we found it extremely difficult to get a clear, unified answer on everything related to VR development. The topic itself is huge and involves many moving pieces.
+
+We created this project to answer these questions for our own needs. Ideally, they will answer your questions as well. There is still a ton that we don't fully understand about the VR development and packaging process and welcome any and all expertise.
+
+If you would like to contribute, please create an issue or search to see if one already exists in this repository. As a reminder, this project is focused on knowledge and guidance related to VR packaging. We are not interested in provided game content or logic.
+
+Some things we would like to know include:
+
+- [ ] Does this work on other non-Oculus devices?
+- [ ] Do other versions of the Android SDK/APIs work?
+- [ ] Are there things we do/don't need to set/install/configure?
+- [ ] Are there better/more performant/more VR-focused Project Settings we can use?
+- [ ] What needs to be configured for a mininum, working Windows environment?
+  - We've done some testing in this area, but have been unable to produce consistent results
+  - We would likely create a separate Windows-focused branch for this in our repository
+- [ ] What should we know about the difference between `ASTC`, `ETC2` and `DXT`?
+- [ ] What do need to do to create a `Shipping` package that's ready for app stores?
