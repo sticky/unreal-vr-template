@@ -1,26 +1,30 @@
 # Unreal Engine 5.0 | Oculus Quest 2 | MacOS
 
-This repository contains a barebones starter template for an Unreal Engine 5.0 VR project. This branch is specifically targeted and tested to package a working development-mode APK for Oculus Quest 2 via the Unreal Engine 5.0 on MacOS.
+This repository contains a barebones starter template for an Unreal Engine 5.0 VR project. This branch is specifically targeted and tested to package a working development-mode APK for Oculus Quest 2 via Unreal Engine 5.0 on MacOS.
 
 ## Goal
 
 The goal of this repository is to get a VR project successfully packaged and running on your head mounted display. It should provide a known working starting point for new VR projects. It is not focused on providing game logic or starter content.
 
-The steps documentated below will help you launch Unreal Engine's supplied _Virtual Reality_ project, but we felt that project contained too many features, shaders, plugins, variables, and unknowns that could create hard-to-trace problems in later development and build stages.
+The steps documentated below will help you launch Unreal Engine's supplied _Virtual Reality_ project, but we felt that project contained too many features, shaders, plugins, variables, and unknowns that could create hard-to-trace problems in later stages of development and packaging.
 
-Our template is geared with a "bring your own" mentality aimed primarily at reducing the complexity of the build and packaging process.
+Our template is geared with a "bring your own" mentality aimed primarily at reducing the complexity and mystery of building and packaging for devices. We hope it provides a unified source of knowledge for getting started in Unreal / VR development.
 
 ## What to Expect
 
-After successfully build and packaging the project, you will be able to put on your Oculus Quest 2 headset and see a starkly lit blue floor. There is a sphere, cube and cone in three of the four corners.
+After successfully building and packaging the project, you will be able to put on your Oculus Quest 2 headset and see a starkly lit blue floor. There is a sphere, cube and cone in three of the four corners. You will be able to look around and see your hand controllers.
 
-The Oculus Quest 1 headset will also work, but regardless of headset, we have hardcoded a reference to the Quest 2 hand controller meshes. There is no visual feedback for button clicking and the only functionality is the "snap" motion from the left joystick.
+There is no visual feedback for button clicking and the only functionality is the "snap turn" motion on the left joystick.
 
-We used the `VRPawn` Blueprint from the Unreal Engine's _Virtual Reality_ template as a starting point for our template, but we have cleared out its original functionality, leaving only the basic nodes for responding to input. Choose your own.
+> Note: The Oculus Quest 1 headset will also work, but we have hardcoded a reference to the Quest 2 hand controller meshes as provided by the OpenXR plugin. You can change this in the `VRPawn` Blueprint.
+
+We used the `VRPawn` Blueprint from Unreal Engine's _Virtual Reality_ template as a starting point for our template, but we have cleared out its original functionality, leaving only the basic nodes for responding to input. Bring your own.
 
 ## System Recommendations
 
-These are the system settings and packages that we know to successfully compile and launch this template. As a disclaimer, there may be some flexibility in the versions and packages you choose, but the ones listed below provided the most consistent results for us. There are notes below that detail definite conflicts and problems areas, when known, as well as tips for installing.
+These are the system settings and packages that we know to successfully compile and launch this template. As a disclaimer, there may be some flexibility in the versions and packages you choose, but the ones listed below provided the most consistent results for us.
+
+See the [Installation and Configuration](#installation-and-configuration) section of this document for tips on preparing your environment and notes on potential issues you may experience in the process.
 
 - Unreal Engine
   - Version: `5.0.2`
@@ -49,19 +53,21 @@ These are the system settings and packages that we know to successfully compile 
 
 ### Android Studio
 
+Oculus headsets are Android devices under the hood. When creating an Oculus-targeted VR project in Unreal Engine, your final output will be an Android app. Android Studio provides a complete set of tools for developing Android apps and so it is the obvious choice for packaging a VR application from Unreal.
+
 #### Install
 
-From the download archives at [https://developer.android.com/studio/archive](https://developer.android.com/studio/archive), download and install [Android Studio 4.0](https://redirector.gvt1.com/edgedl/android/studio/install/4.0.0.16/android-studio-ide-193.6514223-mac.dmg)
+From the download archives at [https://developer.android.com/studio/archive](https://developer.android.com/studio/archive), download and install [Android Studio `4.0`](https://redirector.gvt1.com/edgedl/android/studio/install/4.0.0.16/android-studio-ide-193.6514223-mac.dmg)
 
-It's often recommended to have Unreal Engine and Epic Games Launcher closed while installing and configuring Android Studio
+> Note: We've often seen it recommended to have Unreal Engine and Epic Games Launcher closed while installing and configuring Android Studio. We suspect this has something to do with Unreal being able to source the newly configured environment. At the very least, you should restart your Editor after installing everything.
 
-Version 4.0 is the one we've seen most often recommended, but we have also had success with version 4.2.2 and suspect any of the 4.x.x versions would be compatible. Our configuration seems to work on both fresh and existing installs.
+Android Studio `4.0` is the one we've seen most often recommended, but we have also had success with version `4.2.2` and suspect any of the `4.x.x` versions would be compatible. Our configuration seems to work on both fresh and existing installs. It doesn't really matter if you choose a "standard" or "custom" installation as you will have to configure additional components anyway.
 
-The latest version of Android Studio (Chipmunk 2021.2.1, at this writing) will not work. From our tests, it seems to expect different requirements for the gradle project than the ones that Unreal Engine 5.0 automatically generates during the build process. We did not experiment with changing this default gradle setup.
+> Beware: The latest version of Android Studio (`Chipmunk 2021.2.1`, at this writing) will _not_ work. From our tests, it seems to expect different requirements for the Gradle project than the ones that Unreal Engine 5.0 automatically generates during the build process. We did not experiment with changing this default Gradle setup. See the [Troubleshooting > Gradle](#gradle) for more.
 
 #### Configure
 
-The 4.x versions include an SDK Manager that will handle installing the minimum required packages. We recommend using it as opposed to installing separately from other sources.
+The `4.x.x` versions include an SDK Manager that will handle installing the minimum required packages. We recommend using it as opposed to installing separately from other sources.
 
 From the "Welcome to Android Studio" splash screen, select _Configure > SDK Manager_ (or from within an Android project, select _Tools > SDK Manager_).
 
@@ -82,19 +88,21 @@ Next, select the _SDK Tools_ tab and check "Show Package Details."
   - [x] **3.18.1**
 - [x] **Android SDK Platform-Tools** (version 33.0.2)
 
-It may be necessary to add the Intel HAXM tool, but we're not sure how necessary it is. It may depend on your system's processer (i.e. Apple chip vs. Intel chip). We know it is not necessary for M1 Apple chip Macs, but also hasn't hurt.
-
-- [x] **Intel x86 Emulator Accelerator (HAXM installer)** (version 7.6.5)
-
 Click "Apply" and follow any prompts to continue with the install/uninstall of the packages.
 
-> Note: We prefer to uncheck all other packages in our SDK Mananger settings. It keeps the installation light and helps prevent possible overwrites/collisions in Unreal Engine. See more about this later in [Unreal Engine > Configure > Android SDK](#android-sdk))
+> Note: We prefer to uncheck all other packages in our SDK Mananger settings. It keeps the installation light and helps prevent possible overwrites/collisions in Unreal Engine. See more about this later in [Unreal Engine > Configure > Android SDK](#android-sdk)
 
 #### Tips
 
+##### Quick Launch
+
 You should not ever need to run the full Android Studio during the build process. It is really only used to manage related tools. In fact, you do not even need to open the full IDE. You can configure everything from the "welcome" splash screen.
 
-Save some time by setting Android Studio to prefer the splash screen by unchecking the box for **Reopen last project on startup** in _Preferences > Appearance and Behavior > System Settings_, under the "Startup/Shutdown" section.
+Save some time by setting Android Studio to prefer the splash screen instead of the last open project from _Preferences > Appearance and Behavior > System Settings_, under the "Startup/Shutdown" section, uncheck:
+
+- [ ] **Reopen last project on startup**
+
+##### CLI
 
 You can get a list of the installed packages and their locations in terminal with the `sdkmanager` command line tool.
 
@@ -107,17 +115,17 @@ $ ./sdkmanager --list_installed
 
 #### Install
 
-Android Studio 4.0 comes with a pre-installed Java version `1.8` ([or 8](https://www.oracle.com/java/technologies/javase/jdk8-naming.html)). We use this install for our Unreal Engine builds. It is located in the Application directory, such as _/Applications/Android Studio.app/Contents/jre/jdk/Contents/Home_.
+Android Studio `4.0` comes with a pre-installed Java version `1.8` ([or 8](https://www.oracle.com/java/technologies/javase/jdk8-naming.html)). We use this install for our Unreal Engine builds. It is located wherever your app is installed, such as _/Applications/Android Studio.app/Contents/jre/jdk/Contents/Home_.
 
-> Beware: the white-space character in the app name can be an issue for Unreal Engine settings
+> Beware: the white-space character in the app name can be an issue for Unreal Engine settings and terminal commands
 
-Unreal Engine 5 will automatically install `gradle v6.1.1` during the build/packaging process. This seems most compatible with `java 1.8`, but we have also seen `java 11.x` work. Proceed at you own risk.
+Unreal Engine `5.0` will automatically install Gradle `6.1.1` in order to handle the packaging process. This seems most compatible with Java `1.8`, but we have also seen Java `11.x` work. Proceed at you own risk.
 
 #### Configure
 
-You should ensure that the `JAVA_HOME` environment variable is set in you shell, and that it matches the same version and path as the one you reference in any Unreal Engine Project Settings.
+You should ensure that the `JAVA_HOME` environment variable is set in your shell and that it matches the same version and path as the one you reference in any Unreal Engine Project Settings.
 
-We use `jenv` to handle this, see Tips section below.
+We use `jenv` to handle this, see [Tips > Environment Management](#environment-management) section below.
 
 #### Tips
 
@@ -134,6 +142,9 @@ To get information about your current Java install, here are some helpful termin
 ```bash
 # see the current global version
 $ java -version
+
+# to see if the JAVA_HOME variable is set
+$ echo $JAVA_HOME
 
 # if using jenv, find the install path
 readlink -f `jenv javahome`
@@ -154,7 +165,7 @@ We are using the latest stable release of Unreal Engine `5.0.2`, as installed th
 
 ##### Config INI Files
 
-The _Config/_ directory in this repository should contain everything you need to build the project for an Oculus Quest 2 with regard to basic VR rendering. We've made efforts to reduce or remove settings that do not specifically target or address VR environments.
+The _Config/_ directory in this repository should contain everything you need to build the project for an Oculus Quest 2 with regard to basic VR rendering. We've made efforts to remove settings that do not specifically address VR environments.
 
 ##### Android SDK
 
@@ -164,16 +175,16 @@ Navigate to _Platforms > Android SDK_ and configure all the fields here. Unreal 
 
 | SDKConfig               |                                                                                       |
 | ----------------------- | ------------------------------------------------------------------------------------- |
-| Location of Android SDK | `~/Library/Android/sdk`                                                               |
-| Location of Android NDK | `~/Library/Android/sdk/ndk/21.1.6352462`                                              |
-| Location of JAVA        | `/Applications/Android Studio.app/Contents/jre/jdk/Contents/Home`                     |
-|                         | or `~/.jenv/versions/1.8` (if you set up `jenv` to point to the Android install path) |
+| Location of Android SDK | _~/Library/Android/sdk_                                                               |
+| Location of Android NDK | _~/Library/Android/sdk/ndk/21.1.6352462_                                              |
+| Location of JAVA        | _/Applications/Android Studio.app/Contents/jre/jdk/Contents/Home_                     |
+|                         | or _~/.jenv/versions/1.8_ (if you set up `jenv` to point to the Android install path) |
 | SDK API Level           | `matchndk` (or `android-29`, see notes)                                               |
 | NDK API Level           | `latest` (or `android-21`, see notes)                                                 |
 
 > Note: the example uses `~` to indicate your user's home path, but you should probably replace this with an absolute path like `/Users/myname`
 
-We use `matchndk` and `latest` in our API level settings, but this comes with the caveat that there are no other tools installed by the Android Studio SDK Manager. If you need others installed simultaneously, you will have to reference specific versions such as `android-29` and `android-21`, but beware that Unreal Engine may attempt to install its preferred minor/patch version in this scenario.
+We use `matchndk` and `latest` in our API level settings, but this assumes that there are no other tools installed in the Android Studio SDK Manager. If you need others installed simultaneously, you should reference specific versions such as `android-29` and `android-21`, but beware that Unreal Engine may attempt to install its preferred minor/patch version in this scenario.
 
 ##### APK Packaging
 
@@ -181,13 +192,13 @@ Open up the _Project Settings_ window.
 
 Under _Platforms > Android > APK Packaging_, change the Android Package name to use your own company or personal ID.
 
-Then scroll down to the bottom of the _APK Packaging_ section and ensure that the "Platform files are writable" by clicking the "Configure Now" button (if applicable). Be sure to click "Accept SDK License" as well.
+Then scroll down to the bottom of the _APK Packaging_ section and ensure you see a big green banner with "Platform files are writable" by clicking the "Configure Now" button (if applicable). Be sure to click "Accept SDK License" as well.
 
 > Note: You should "Configure Now" only after you've applied the Android SDK settings documented above.
 
 ##### Plugins
 
-One of the most important breakthroughs we had while troubleshooting the default Virtual Reality template was _removing_ the OculusVR Plugin! As of Unreal Engine 5.0, it is [officially recommended](https://discord.com/channels/187217643009212416/221799478364078081/934127474424578141) that you only need the OpenXR plugin. _This is already configured in our template_, but we mention it here because it is such a critical piece of the puzzle (re: not launching black screens in the headset).
+One of the most important breakthroughs we had while troubleshooting the default _Virtual Reality_ template was _removing_ the OculusVR Plugin! As of Unreal Engine 5.0, it is [officially recommended](https://discord.com/channels/187217643009212416/221799478364078081/934127474424578141) that you only need the OpenXR plugin. _This is already configured in our template_, but we mention it here because it is such a critical piece of the puzzle (re: not launching black screens in the headset).
 
 To our knowledge, this change has something to do with the way that Oculus now interfaces with OpenXR to handle all of those original OculusVR plugin features. But all we really know is:
 
@@ -225,13 +236,13 @@ $YOUR_PROJECT_DIRECTORY/Intermediate/Config/CoalescedSourceConfigs/**
 
 ### Gradle
 
-Gradle is the command line tool used under the hood to package the actual Android APK file for your VR application. Unreal Engine 5 automatically installs gradle locally to the project during the build process.
+Gradle is a build tool used under the hood to package the actual Android APK file for your VR application. Unreal Engine `5.0` automatically installs Gradle locally to the project during the build process.
 
-This means you don't need to install this separately, but we wanted to make a note of it since it is a critical part of the build process and may be the source of errors.
+This means you don't need to install this separately, but we wanted to make a note of it since it is a critical part of the build process and may be the source of errors. We have not tested what happens if there is an existing version of Gradle already on the system.
 
 #### Tips
 
-You can find build information and perform useful functions by locating the install path and running `gradlew` tasks. Note the `w` at the end of the command name! Also know that this directory and install will not exist until you attempt your first build.
+You can find build information and perform useful functions by locating the install path and running `gradlew` tasks (note the `w` at the end of the command name). Also know that this directory and install will not exist until you attempt to create your first packaged app.
 
 ```bash
 $ cd $YOUR_PROJECT_DIRECTORY/Intermediate/Android/arm64/gradle
