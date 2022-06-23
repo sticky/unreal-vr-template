@@ -12,6 +12,8 @@ Our template is geared with a "bring your own" mentality aimed primarily at redu
 
 ## What to Expect
 
+![A preview of the app depicting blue floor, sphere and Oculus Quest 2 controllers](./docs/img/preview.jpg)
+
 After successfully building and packaging the project, you will be able to put on your Oculus Quest 2 headset and see a starkly lit blue floor. There is a sphere, cube and cone in three of the four corners. You will be able to look around and see your hand controllers.
 
 There is no visual feedback for button clicking and the only functionality is the "snap turn" motion on the left joystick.
