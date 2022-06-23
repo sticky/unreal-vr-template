@@ -10,6 +10,14 @@ The steps documentated below will help you launch Unreal Engine's supplied _Virt
 
 Our template is geared with a "bring your own" mentality aimed primarily at reducing the complexity of the build and packaging process.
 
+## What to Expect
+
+After successfully build and packaging the project, you will be able to put on your Oculus Quest 2 headset and see a starkly lit blue floor. There is a sphere, cube and cone in three of the four corners.
+
+The Oculus Quest 1 headset will also work, but regardless of headset, we have hardcoded a reference to the Quest 2 hand controller meshes. There is no visual feedback for button clicking and the only functionality is the "snap" motion from the left joystick.
+
+We used the `VRPawn` Blueprint from the Unreal Engine's _Virtual Reality_ template as a starting point for our template, but we have cleared out its original functionality, leaving only the basic nodes for responding to input. Choose your own.
+
 ## System Recommendations
 
 These are the system settings and packages that we know to successfully compile and launch this template. As a disclaimer, there may be some flexibility in the versions and packages you choose, but the ones listed below provided the most consistent results for us. There are notes below that detail definite conflicts and problems areas, when known, as well as tips for installing.
