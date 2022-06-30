@@ -1,6 +1,6 @@
-# Unreal Engine 5.0 | Oculus Quest 2 | MacOS
+# Unreal Engine 4.27 | Oculus Quest 2 | Windows
 
-This repository contains a barebones starter template for an Unreal Engine 5.0 VR project. This branch is specifically targeted and tested to package a working development-mode APK for Oculus Quest 2 via Unreal Engine 5.0 on MacOS.
+This repository contains a barebones starter template for an Unreal Engine 4.27 VR project. This branch is specifically targeted and tested to package a working development-mode APK for Oculus Quest 2 via Unreal Engine 4.27 on Windows.
 
 ## Goal
 
@@ -12,15 +12,11 @@ Our template is geared with a "bring your own" mentality aimed primarily at redu
 
 ## What to Expect
 
-![A preview of the app depicting blue floor, sphere and Oculus Quest 2 controllers](./docs/img/preview.jpg)
+After successfully building and packaging the project, you will be able to put on your Oculus Quest 2 headset and see a grey floor. You will be able to look around and see the motion of your hands or controllers in the form of 2 simple cube meshes.
 
-After successfully building and packaging the project, you will be able to put on your Oculus Quest 2 headset and see a starkly lit blue floor. There is a sphere, cube and cone in three of the four corners. You will be able to look around and see your hand controllers.
+There is no visual feedback for button clicking.
 
-There is no visual feedback for button clicking and the only functionality is the "snap turn" motion on the left joystick.
-
-> Note: The Oculus Quest 1 headset will also work, but we have hardcoded a reference to the Quest 2 hand controller meshes as provided by the OpenXR plugin. You can change this in the `VRPawn` Blueprint.
-
-We used the `VRPawn` Blueprint from Unreal Engine's _Virtual Reality_ template as a starting point for our template, but we have cleared out its original functionality, leaving only the basic nodes for responding to input. Bring your own.
+We used the `VRPawn` Blueprint from Unreal Engine's _Virtual Reality_ template as a starting point for our template, but we have cleared out its original functionality. Bring your own.
 
 ## System Recommendations
 
@@ -29,7 +25,7 @@ These are the system settings and packages that we know to successfully compile 
 See the [Setting Up Your Environment](#setting-up-your-environment) section of this document for tips on preparing your environment and notes on potential issues you may experience in the process.
 
 - Unreal Engine
-  - Version: `5.0.2`
+  - Version: `4.27.2`
 - Android Studio
   - Version: `4.0`
   - SDK Platform: Android `10.0 (Q)`
@@ -43,13 +39,16 @@ See the [Setting Up Your Environment](#setting-up-your-environment) section of t
     - Android SDK Platform-Tools: `33.0.2`
 - Java
   - openjdk version: `1.8.0_242-release`
-- MacOS
-  - Version: `12.4 (Monterey)`
+- Windows
+  - Version: `10 (Pro)`
   - Processor:
-    - Apple Chip M1 Max
-    - Intel i5
+    - 11th Gen Intel(R) Core(TM) `i9-11900K` @ 3.50GHz
 - Oculus Developer Hub
-  - Version: `2.5.0`
+  - Version: `2.6.0`
+- Visual Studio
+  - Version: `Community 2022`
+  - .NET Runtime:
+    - Version: `.NET Core 3.1 Runtime (LTS)`
 
 ## Setting Up Your Environment
 
@@ -59,7 +58,7 @@ Oculus headsets are Android devices under the hood. When creating an Oculus-targ
 
 #### Install
 
-From the download archives at [https://developer.android.com/studio/archive](https://developer.android.com/studio/archive), download and install [Android Studio `4.0`](https://redirector.gvt1.com/edgedl/android/studio/install/4.0.0.16/android-studio-ide-193.6514223-mac.dmg)
+From the download archives at [https://developer.android.com/studio/archive](https://developer.android.com/studio/archive), download and install [Android Studio `4.0`](https://redirector.gvt1.com/edgedl/android/studio/install/4.0.0.16/android-studio-ide-193.6514223-windows.exe)
 
 > Note: We've often seen it recommended to have Unreal Engine and Epic Games Launcher closed while installing and configuring Android Studio. We suspect this has something to do with Unreal being able to source the newly configured environment. At the very least, you should restart your Editor after installing everything.
 
@@ -104,64 +103,43 @@ Save some time by setting Android Studio to prefer the splash screen instead of 
 
 - [ ] **Reopen last project on startup**
 
-##### CLI
+### Visual Studio
 
-You can get a list of the installed packages and their locations in terminal with the `sdkmanager` command line tool.
+#### Install
 
-```bash
-$ cd ~/Library/Android/sdk/cmdline-tools/latest/bin/
-$ ./sdkmanager --list_installed
-```
+If you do not already have [Visual Studio](https://visualstudio.microsoft.com/vs/) installed, follow the recommended steps for your system. We use Visual Studio `2022 Community` Edition and the only reason we use it is to manage the installation of the .NET Runtime.
+
+> It may be possible to install .NET on it's own, but when we tried, it appeared Unreal Engine's _RunUAT.bat_ script had difficulties locating it. Installing through Visual Studio cleared up this issue for us.
+
+#### Configure
+
+The _RunUAT.bat_ script specifically requests .NET Runtime version `3.1`. From _Tools > Get Tools and Features_, select the "Individual Components" tab and under the .NET section, check:
+
+- [x] **.NET Core 3.1 Runtime (LTS)**
+
+Hit the "Modify" or "Install" button to proceed.
 
 ### Java
 
 #### Install
 
-Android Studio `4.0` comes with a pre-installed Java version `1.8` ([or 8](https://www.oracle.com/java/technologies/javase/jdk8-naming.html)). We use this install for our Unreal Engine builds. It is located wherever your app is installed, such as _/Applications/Android Studio.app/Contents/jre/jdk/Contents/Home_.
+Android Studio `4.0` comes with a pre-installed Java version `1.8` ([or 8](https://www.oracle.com/java/technologies/javase/jdk8-naming.html)). We use this install for our Unreal Engine builds. It is located wherever your app is installed, such as _C:\Program Files\Android\Android Studio\jre_.
 
-> Beware: the white-space character in the app name can be an issue for Unreal Engine settings and terminal commands
+> Beware: the white-space character in the path can be an issue for Unreal Engine settings and Command Prompt
 
-Unreal Engine `5.0` will automatically install Gradle `6.1.1` in order to handle the packaging process. This seems most compatible with Java `1.8`, but we have also seen Java `11.x` work. Proceed at you own risk.
+Unreal Engine will automatically install Gradle `6.1.1` in order to handle the packaging process. This seems most compatible with Java `1.8`, but we have also seen Java `11.x` work. Proceed at you own risk.
 
 #### Configure
 
-You should ensure that the `JAVA_HOME` environment variable is set in your shell and that it matches the same version and path as the one you reference in any Unreal Engine Project Settings.
+You should ensure that the `JAVA_HOME` environment variable is set and that it matches the same version and path as the one you reference in any Unreal Engine Project Settings.
 
-We use `jenv` to handle this, see [Tips > Environment Management](#environment-management) section below.
-
-#### Tips
-
-##### Environment Management
-
-We use `jenv` to reduce the headaches involved with Java versioning and ensuring the `JAVA_HOME` environment variable is set and available when Unreal Engine needs it.
-
-Refer to the `jenv` [website](https://www.jenv.be/) and Github [documentation](https://github.com/jenv/jenv) for details about installing and configuring. We did it through [`homebrew`](https://brew.sh/) and ensured the shell was configured to `export` the `JAVA_HOME` variable.
-
-##### Information
-
-To get information about your current Java install, here are some helpful terminal commands:
-
-```bash
-# see the current global version
-$ java -version
-
-# to see if the JAVA_HOME variable is set
-$ echo $JAVA_HOME
-
-# if using jenv, find the install path
-readlink -f `jenv javahome`
-# or for more verbose output
-ls -l `jenv javahome`
-
-# or if not using jenv
-which java
-```
+Search for "Edit the System Environment Variables" in the Windows search bar. It will open a System Properties Window. Click the "Environment Variables" button and add a "New" one under User Variables (or System, if preferred). Set `JAVA_HOME` to the correct location, such as _C:\Program Files\Android\Android Studio\jre_.
 
 ### Unreal Engine
 
 #### Install
 
-We are using the latest stable release of Unreal Engine `5.0.2`, as installed through the Epic Games Launcher.
+We are using the latest stable release of Unreal Engine `4.27.2`, as installed through the Epic Games Launcher.
 
 #### Configure
 
@@ -175,16 +153,13 @@ There are some additional things you should set in the Editor UI to ensure succe
 
 Navigate to _Platforms > Android SDK_ and configure all the fields here. Unreal Engine's tooltips for these fields suggest that they will default to your system's environment variables if not set, but we have noticed less issues when explicity setting them. Below is an example:
 
-| SDKConfig               |                                                                                       |
-| ----------------------- | ------------------------------------------------------------------------------------- |
-| Location of Android SDK | _~/Library/Android/sdk_                                                               |
-| Location of Android NDK | _~/Library/Android/sdk/ndk/21.1.6352462_                                              |
-| Location of JAVA        | _/Applications/Android Studio.app/Contents/jre/jdk/Contents/Home_                     |
-|                         | or _~/.jenv/versions/1.8_ (if you set up `jenv` to point to the Android install path) |
-| SDK API Level           | `matchndk` (or `android-29`, see notes)                                               |
-| NDK API Level           | `latest` (or `android-21`, see notes)                                                 |
-
-> Note: the example uses `~` to indicate your user's home path, but you should probably replace this with an absolute path like `/Users/myname`
+| SDKConfig               |                                                                   |
+| ----------------------- | ----------------------------------------------------------------- |
+| Location of Android SDK | _C:/Users/<USER_NAME>/AppData/Local/Android/Sdk_                  |
+| Location of Android NDK | _C:/Users/<USER_NAME>/AppData/Local/Android/Sdk/ndk/21.1.6352462_ |
+| Location of JAVA        | _C:/Program Files/Android/Android Studio/jre_                     |
+| SDK API Level           | `matchndk` (or `android-29`, see notes)                           |
+| NDK API Level           | `latest` (or `android-21`, see notes)                             |
 
 We use `matchndk` and `latest` in our API level settings, but this assumes that there are no other tools installed in the Android Studio SDK Manager. If you need others installed simultaneously, you should reference specific versions such as `android-29` and `android-21`, but beware that Unreal Engine may attempt to install its preferred minor/patch version in this scenario.
 
@@ -198,16 +173,6 @@ Then scroll down to the bottom of the _APK Packaging_ section and ensure you see
 
 > Note: You should "Configure Now" only after you've applied the Android SDK settings documented above.
 
-##### Plugins
-
-One of the most important breakthroughs we had while troubleshooting the default _Virtual Reality_ template was _removing_ the OculusVR Plugin! As of Unreal Engine 5.0, it is [officially recommended](https://discord.com/channels/187217643009212416/221799478364078081/934127474424578141) that you only need the OpenXR plugin. _This is already configured in our template_, but we mention it here because it is such a critical piece of the puzzle (re: not launching black screens in the headset).
-
-To our knowledge, this change has something to do with the way that Oculus now interfaces with OpenXR to handle all of those original OculusVR plugin features. But all we really know is:
-
-- [x] OpenXR :star2:
-- [ ] Oculus VR :japanese_ogre:
-- [ ] SteamVR :confused:
-
 #### Tips
 
 ##### Config Merging
@@ -216,29 +181,11 @@ We have been able to turn unsuccessful project builds into succesful ones by mer
 
 > Our _Config/\*.ini_ files have had their settings alphabetically sorted and we'd recommend do the same to yours. This greatly reduces the complexity of diffing a merge!
 
-##### Other Config Locations
-
-Unreal Engine saves project settings in various places throughout the filesystem. Only one of them is generally checked into source control, as others contain generated and per-system options that are otherwise "hidden" from the end-user. These files contain a lot of useful information for comparing what works and what doesn’t for a successful VR build.
-
-If you run into problems with your build and suspect project settings are to blame, here are some places to look:
-
-```bash
-# usually checked into source control
-$YOUR_PROJECT_DIRECTORY/Config/**
-
-# generated by Unreal, contains things like per-system SDKPath variable
-$YOUR_PROJECT_DIRECTORY/Intermediate/Config/CoalescedSourceConfigs/**
-
-# per system settings, may be stored elsewhere depending on system
-# note the name of the Editor path includes you project's name, like SuperBlankEditor
-~/Library/Preferences/Unreal\ Engine/$YOUR_PROJECT_NAMEEditor/**
-```
-
 ## Packaging the Application
 
 After successfully [Setting Up Your Environment](#setting-up-your-environment), you are ready to package the application and run it on your device.
 
-The first step of this process is to ensure that your Oculus device is configured for development and attached to your computer. You should follow [Meta's guidelines](https://developer.oculus.com/) regarding these steps. We use the [Oculus Developer Hub `2.5.0`](https://developer.oculus.com/documentation/unity/ts-odh/)
+The first step of this process is to ensure that your Oculus device is configured for development and attached to your computer. You should follow [Meta's guidelines](https://developer.oculus.com/) regarding these steps. We use the [Oculus Developer Hub `2.6.0`](https://developer.oculus.com/documentation/unity/ts-odh/)
 
 ### Before Launching
 
@@ -246,9 +193,9 @@ Be sure to build the light and levels, otherwise you may see some warnings in th
 
 ### From the Project Launcher Window
 
-After confirming your device is ready and connected to your computer, you should see it in the list from the "Platforms" dropdown in the Unreal Engine editor. For the first run, we recommend packaging from the _Tools > Project Launcher_ window.
+After confirming your device is ready and connected to your computer, you should see it in the list from the "Platforms" dropdown in the Unreal Engine editor. For the first run, we recommend packaging from the _Launch > Project Launcher_ window.
 
-From the window, click the button for "Show Advanced." The find your Android Quest device in the list and configure the following dropdown settings:
+From the window, click the button for "Advanced." The find your Android Quest device in the list and configure the following dropdown settings:
 
 | Setting    | Value          |
 | ---------- | -------------- |
@@ -266,18 +213,6 @@ At the time of this writing, we have not tested a `Shipping` config and expect i
 
 We start off with a `By the book` data build because even our slim template needs to cook some assets on the first run. If you are not changing any meshes, materials or lighting and are just testing the packaging process, you can probably switch to `Do not cook` to save yourself some time.
 
-### From the Quick Launch Dropdown
-
-If you've followed the steps in [From the Project Launcher Window](#from-the-project-launcher-window), you should be able to select you device from the _Platforms > Quick Launch_ dropdown and package/run the app with the same settings.
-
-### From the Content/Device/SDK Management Dropdown
-
-You can generate and save an APK file on your machine by selecting _Platforms > Content/Device/SDK Management > Android > Package Project_. Configure the settings as described in [From the Project Launcher Window](#from-the-project-launcher-window).
-
-> Note: you will likely get an annoying popup when using this option that suggests "SDK Not Setup." As best we can tell, this is a bug in Unreal Engine for Mac because if you followed our [Setting Up Your Environment](#setting-up-your-environment) steps, the SDK is definitely setup. Hit "Continue" and proceed on your merry way.
-
-You will prompted to specify a directory for the packaged files to be save on you machine. After the process is complete, you can manually drag and drop the APK file into any Oculus Developer Hub to install on a selected device.
-
 ## Troubleshooting
 
 ### Gradle
@@ -291,21 +226,21 @@ This means you don't need to install this separately, but we wanted to make a no
 You can find build information and perform useful functions by locating the install path and running `gradlew` tasks (note the `w` at the end of the command name). Also know that this directory and install will not exist until you attempt to create your first packaged app.
 
 ```bash
-$ cd $YOUR_PROJECT_DIRECTORY/Intermediate/Android/arm64/gradle
+> cd $YOUR_PROJECT_DIRECTORY\Intermediate\Android\arm64\gradle
 
 # to list version information
-$ ./gradlew --version
+> gradlew.bat --version
 
 # to get a list of other tasks you can run (we only do these if debugging an issue)
-$ ./gradlew tasks
+> gradlew.bat tasks
 ```
 
 If your build runs into errors that seem related to Gradle or APK packaging, we have found it helpful to sometimes manually clear the build directory and caches with a `gradlew` task. For instance:
 
 ```bash
-$ cd $YOUR_PROJECT_DIRECTORY/Intermediate/Android/arm64/gradle
-$ ./gradlew clean
-$ ./gradlew cleanBuildCache
+> cd $YOUR_PROJECT_DIRECTORY/Intermediate/Android/arm64/gradle
+> gradlew.bat clean
+> gradlew.bat cleanBuildCache
 ```
 
 ## Contributions
@@ -322,8 +257,5 @@ Some things we would like to know include:
 - [ ] Do other versions of the Android SDK/APIs work?
 - [ ] Are there things we do/don't need to set/install/configure?
 - [ ] Are there better/more performant/more VR-focused Project Settings we can use?
-- [ ] What needs to be configured for a mininum, working Windows environment?
-  - We've done some testing in this area, but have been unable to produce consistent results
-  - We would likely create a separate Windows-focused branch for this in our repository
 - [ ] What should we know about the difference between `ASTC`, `ETC2` and `DXT`?
 - [ ] What do need to do to create a `Shipping` package that's ready for app stores?
